@@ -1,22 +1,32 @@
-// var express = require("express");
-// var app = express();
+const express = require("express");
+const app = express();
+const path = require("path");
 
-// // respond with "hello world" when a GET request is made to the homepage
-// app.get("/", function (req, res) {
-//   res.send("hello world");
-// });
+const PORT = 3000;
+const createPath = (page) =>
+  path.resolve(__dirname, "nodeJsBasic/baseRouting", `${page}.html`);
 
-// app.route('/book')
-//   .get(function(req, res) {
-//     res.send('Get a random book');
-//   })
-//   .post(function(req, res) {
-//     res.send('Add a book');
-//   })
-//   .put(function(req, res) {
-//     res.send('Update the book');
-//   });
+app.listen(PORT, "localhost", (error) => {
+  error ? console.log(error) : console.log(`listening port ${PORT}`);
+});
 
-var birds = require("./birds");
+app.get("/", (req, res) => {
+  // res.send('<h3>Hello</h3>'); // автоматичеки понимает тип данных
+  // res.send({ a: '123'});
+  // res.json([{ a: "123" }]);
 
-app.use("/birds", birds);
+  // console.log("createPath('page1')", createPath("page1"));
+  res.sendFile(createPath("page1"));
+});
+
+app.get("/page2", (req, res) => {
+  res.sendFile(createPath("page2"));
+});
+
+app.get("/page3", (req, res) => {
+  res.redirect("/page2");
+});
+
+app.use((req, res) => {
+  res.status(404).sendFile(createPath("error"));
+});
