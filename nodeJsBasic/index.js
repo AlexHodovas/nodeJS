@@ -3,8 +3,7 @@ const app = express();
 const path = require("path");
 
 const PORT = 3000;
-const createPath = (page) =>
-  path.resolve(__dirname, "nodeJsBasic/baseRouting", `${page}.html`);
+const createPath = (page) => path.resolve(__dirname, "../html", `${page}.html`);
 
 app.listen(PORT, "localhost", (error) => {
   error ? console.log(error) : console.log(`listening port ${PORT}`);
@@ -14,7 +13,6 @@ app.get("/", (req, res) => {
   // res.send('<h3>Hello</h3>'); // автоматичеки понимает тип данных
   // res.send({ a: '123'});
   // res.json([{ a: "123" }]);
-
   // console.log("createPath('page1')", createPath("page1"));
   res.sendFile(createPath("page1"));
 });

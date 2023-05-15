@@ -10,7 +10,8 @@ const server = http.createServer((req, res) => {
   console.log("__dirname", __dirname);
 
   res.setHeader("Content-Type", "text/html");
-  const createPath = (page) => path.resolve(__dirname, "", `${page}.html`);
+  const createPath = (page) =>
+    path.resolve(__dirname, "../../html", `${page}.html`);
   let basePath = "";
 
   switch (req.url) {
@@ -50,5 +51,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, "localhost", (error) => {
-  error ? console.log(error) : console.log(`listening port ${PORT}`);
+  error
+    ? console.log(error)
+    : console.log(`baseRouting listening port --> ${PORT}`);
 });
