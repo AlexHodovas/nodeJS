@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
 
   res.setHeader("Content-Type", "text/html");
   const createPath = (page) =>
-    path.resolve(__dirname, "../../html", `${page}.html`);
+    path.resolve(__dirname, "../../views", `${page}.html`);
   let basePath = "";
 
   switch (req.url) {
