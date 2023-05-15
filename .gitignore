@@ -12,3 +12,4 @@ npm-debug.log
 /lint
 test-report.json
 /.vs
+.env
