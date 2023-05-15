@@ -17,12 +17,12 @@ app.get("/", (req, res) => {
   res.sendFile(createPath("page1"));
 });
 
-app.get("/page2", (req, res) => {
-  res.sendFile(createPath("page2"));
+app.get("/posts", (req, res) => {
+  res.sendFile(createPath("posts"));
 });
 
 app.get("/page3", (req, res) => {
-  res.redirect("/page2");
+  res.redirect("/posts");
 });
 
 app.use((req, res) => {

@@ -22,7 +22,7 @@ const server = http.createServer((req, res) => {
       break;
 
     case "/page2":
-      basePath = createPath("page2");
+      basePath = createPath("posts");
       res.statusCode = 200;
       break;
 
