@@ -7,9 +7,9 @@ const {
   editPost,
 } = require("../controllers/apiPostController");
 
-router.get("/api/posts", getPosts);
-router.delete("/api/posts/:id", deletePost);
-router.put("/api/edit-post/:id", editPost);
-router.post("/api/postUrl", addPost);
+router.get("", getPosts);
+router.delete("/:id", deletePost);
+router.put("/:id", editPost);
+router.post("/add", addPost);
 
 module.exports = router;

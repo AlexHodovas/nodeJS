@@ -8,12 +8,14 @@ const {
   editPost,
 } = require("../controllers/postController");
 
-router.get("/add-post", (req, res) => {
+router.get("", getPosts);
+
+router.get("/add", (req, res) => {
   res.sendFile(createPath("posts"));
 });
-router.get("/posts", getPosts);
-router.delete("/posts/:id", deletePost);
-router.put("/edit-post/:id", editPost);
-router.post("/postUrl", addPost);
+
+router.delete("/:id", deletePost);
+router.put("/:id", editPost);
+router.post("/addPost", addPost);
 
 module.exports = router;

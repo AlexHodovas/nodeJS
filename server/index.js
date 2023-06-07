@@ -1,12 +1,13 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const postApiRoutes = require("../routes/api-post-routes");
+const apiPostsRoutes = require("../routes/apiPostsRoutes");
 const initRoutes = require("../routes/init-routes");
 const postRoutes = require("../routes/post-router");
 const contactRoutes = require("../routes/contact-router");
 const imageRoutes = require("../routes/img-routes");
 const createPath = require("../helpers/createPath");
+const logErrors = require("../helpers/logErrors");
 require("dotenv").config();
 const app = express();
 
@@ -18,20 +19,18 @@ mongoose
   .then(() => console.log("mongoose ok"))
   .catch((e) => console.log("mongoose error", e));
 
-app.listen(process.env.PORT, "localhost", (error) => {
-  error
-    ? console.log(error)
-    : console.log(`listening port ${process.env.PORT}`);
-});
-
 // middleware нужно добавлять перед роутингом
 
-app.use((req, res, next) => {
-  // middleware
-  console.log(`req.method --> ${req.method}`);
-  console.log(`middleware`);
-  next();
-});
+app.use(
+  (req, res, next) => {
+    console.log(`CUSTOM middleware 1 req.method --> ${req.method}`);
+    next(); // без next не пойдет дальше
+  },
+  (req, res, next) => {
+    console.log(`CUSTOM middleware 2`);
+    next();
+  }
+);
 
 app.use(express.static("public"));
 
@@ -48,11 +47,20 @@ app.use(
 );
 
 app.use(initRoutes);
-app.use(postRoutes);
-app.use(postApiRoutes);
+app.use("/posts", postRoutes);
+app.use("/api/posts", apiPostsRoutes);
 app.use(contactRoutes);
 app.use(imageRoutes);
+app.use(logErrors);
 
-app.use((req, res) => {
-  res.status(404).sendFile(createPath("error"));
+app.listen(process.env.PORT, "localhost", (error) => {
+  error
+    ? console.log(error)
+    : console.log(`listening port ${process.env.PORT}`);
+});
+
+app.use((err, req, res, next) => {
+  console.log(`ERROR middleware err`, err);
+  res.status(500).json({ err: `ERROR middleware err ${err}` });
+  // res.status(404).sendFile(createPath("error"));
 });
